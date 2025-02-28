@@ -1,0 +1,37 @@
+{
+  "name": "$TIMEŒ-App",
+  "version": "1.0.0",
+  "description": "A user-friendly application that leverages the $TIMEŒ Engine for temporal reasoning, causality detection, and counterfactual simulation.",
+  "main": "src/app.ts",
+  "scripts": {
+    "start": "ts-node src/app.ts",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3",
+    "ts-node": "^10.4.0",
+    "jest": "^27.0.6",
+    "@types/jest": "^27.0.2",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/$TIMEŒ-App.git"
+  },
+  "keywords": [
+    "causal",
+    "AI",
+    "temporal",
+    "reasoning",
+    "simulation"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

@@ -1,0 +1,48 @@
+{
+  "name": "timeoe-engine",
+  "version": "1.0.0",
+  "description": "A causal AI system focusing on temporal reasoning, causality detection, and counterfactual simulation.",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/timeoe-engine.git"
+  },
+  "keywords": [
+    "causal",
+    "AI",
+    "temporal",
+    "reasoning",
+    "simulation"
+  ],
+  "author": "RANDY IDAEHO",
+  "license": "MIT",
+  "dependencies": {"gatsby-plugin-uninline-styles": "0.2.0",
+    "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "axios": "^0.21.1",
+    "redux": "^4.1.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3",
+    "jest": "^27.0.6",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.10",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^5.52.0",
+    "webpack-cli": "^4.8.0",
+    "eslint": "^7.32.0",
+    "prettier": "^2.3.2"
+  }
+}
+
