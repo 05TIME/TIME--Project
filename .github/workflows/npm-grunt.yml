@@ -22,7 +22,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build
+    - name: Install Dependencies
+      run: npm install
+      
+    - name: Debug Node.js and NPM Versions
       run: |
-        npm install
-        grunt
+        node -v
+        npm -v
+
+    - name: Run Grunt Build
+      run: grunt
