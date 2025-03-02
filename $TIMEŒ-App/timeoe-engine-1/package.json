@@ -19,7 +19,7 @@
     "reasoning",
     "simulation"
   ],
-  "author": "Your Name",
+  "author": "Randy Idaeho",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
