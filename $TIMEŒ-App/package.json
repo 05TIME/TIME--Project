@@ -1,5 +1,5 @@
 {
-  "name": "$TIMEŒ-App",
+  "name": "time-app",
   "version": "1.0.0",
   "description": "A user-friendly application that leverages the $TIMEŒ Engine for temporal reasoning, causality detection, and counterfactual simulation.",
   "main": "src/app.ts",
