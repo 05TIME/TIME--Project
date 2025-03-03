@@ -10,7 +10,7 @@ The $TIMEŒ Project is a comprehensive solution designed to leverage causal AI f
 
 The $TIMEŒ Engine is the core computational engine that processes temporal data, identifies causal relationships, and performs counterfactual simulations. It provides a robust framework for understanding how different variables interact over time and allows users to explore "what-if" scenarios.
 
-#### Features
+#### Key Features
 
 - Temporal reasoning capabilities to track and interpret time-stamped data.
 - Causality detection to identify true causal relationships and filter out spurious correlations.
