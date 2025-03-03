@@ -38,7 +38,7 @@ To set up the $TIMEŒ Project, follow these steps:
 
 2. Navigate to the $TIMEŒ-Engine directory and install dependencies:
 
-   ```
+   ```bash
    cd $TIMEŒ-Engine
    npm install
    ```
