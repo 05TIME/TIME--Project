@@ -32,7 +32,7 @@ To set up the $TIMEŒ Project, follow these steps:
 
 1. Clone the repository:
 
-   ```
+   ```bash
    git clone <repository-url>
    ```
 
