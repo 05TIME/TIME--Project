@@ -45,7 +45,6 @@ To set up the $TIMEŒ Project, follow these steps:
 
 3. Navigate to the $TIMEŒ-App directory and install dependencies:
 
-   ```
    cd ../$TIMEŒ-App
    npm install
    ```
