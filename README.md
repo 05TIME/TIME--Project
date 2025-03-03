@@ -47,6 +47,7 @@ To set up the $TIMEŒ Project, follow these steps:
 
    cd ../$TIMEŒ-App
    npm install
+
    ```
 
 4. Start the $TIMEŒ Engine:
