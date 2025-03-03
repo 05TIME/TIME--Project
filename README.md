@@ -34,7 +34,7 @@ To set up the $TIMEŒ Project, follow these steps:
 
    ```bash
    git clone <repository-url>
-   ```
+   ```bash
 
 2. Navigate to the $TIMEŒ-Engine directory and install dependencies:
 
