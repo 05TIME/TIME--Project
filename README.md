@@ -34,7 +34,7 @@ To set up the $TIMEŒ Project, follow these steps:
 
    ```bash
    git clone <repository-url>
-   ```
+   ```bash
 
 2. Navigate to the $TIMEŒ-Engine directory and install dependencies:
 
@@ -72,7 +72,8 @@ To run the tests for the $TIMEŒ Project, use the following command:
    ```bash
    npm start
    ```
-   ```
+
+   ```bash
    npm start
    ```
 
