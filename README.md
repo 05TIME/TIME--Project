@@ -52,7 +52,7 @@ To set up the $TIMEŒ Project, follow these steps:
 
 4. Start the $TIMEŒ Engine:
 
-   ```
+   ```bash
    npm start
    ```
 
