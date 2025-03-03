@@ -56,7 +56,18 @@ To set up the $TIMEŒ Project, follow these steps:
    npm start
    ```
 
-5. Start the $TIMEŒ App:
+   ```bash
+   cd ../$TIMEŒ-App
+   npm install
+   ```
+
+4. Start the $TIMEŒ Engine:
+
+   ```bash
+   npm start
+   ```
+
+To run the tests for the $TIMEŒ Project, use the following command:
 
    ```bash
    npm start
