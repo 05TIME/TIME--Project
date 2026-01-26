@@ -1,30 +1,41 @@
 import { Platform } from "react-native";
 
-const tintColorLight = "#007AFF";
-const tintColorDark = "#0A84FF";
+const primaryCyan = "#00D9FF";
+const successGreen = "#00FF88";
+const errorRed = "#FF3B30";
 
 export const Colors = {
   light: {
     text: "#11181C",
-    buttonText: "#FFFFFF",
+    textSecondary: "#687076",
+    buttonText: "#0A0A0A",
     tabIconDefault: "#687076",
-    tabIconSelected: tintColorLight,
-    link: "#007AFF",
-    backgroundRoot: "#FFFFFF", // Elevation 0
-    backgroundDefault: "#F2F2F2", // Elevation 1
-    backgroundSecondary: "#E6E6E6", // Elevation 2
-    backgroundTertiary: "#D9D9D9", // Elevation 3
+    tabIconSelected: primaryCyan,
+    link: primaryCyan,
+    primary: primaryCyan,
+    success: successGreen,
+    error: errorRed,
+    backgroundRoot: "#FFFFFF",
+    backgroundDefault: "#F2F2F2",
+    backgroundSecondary: "#E6E6E6",
+    backgroundTertiary: "#D9D9D9",
+    border: "#E0E0E0",
   },
   dark: {
-    text: "#ECEDEE",
-    buttonText: "#FFFFFF",
-    tabIconDefault: "#9BA1A6",
-    tabIconSelected: tintColorDark,
-    link: "#0A84FF",
-    backgroundRoot: "#1F2123", // Elevation 0
-    backgroundDefault: "#2A2C2E", // Elevation 1
-    backgroundSecondary: "#353739", // Elevation 2
-    backgroundTertiary: "#404244", // Elevation 3
+    text: "#FFFFFF",
+    textSecondary: "#8A8A8A",
+    buttonText: "#0A0A0A",
+    tabIconDefault: "#8A8A8A",
+    tabIconSelected: primaryCyan,
+    link: primaryCyan,
+    primary: primaryCyan,
+    success: successGreen,
+    error: errorRed,
+    backgroundRoot: "#0A0A0A",
+    backgroundDefault: "#1A1A1A",
+    backgroundSecondary: "#252525",
+    backgroundTertiary: "#303030",
+    border: "#2A2A2A",
   },
 };
 
@@ -93,13 +104,9 @@ export const Typography = {
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
     sans: "system-ui",
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: "ui-serif",
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: "ui-rounded",
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: "ui-monospace",
   },
   default: {
@@ -116,3 +123,11 @@ export const Fonts = Platform.select({
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
+
+export const HttpMethods = {
+  GET: { color: successGreen, label: "GET" },
+  POST: { color: "#FFD60A", label: "POST" },
+  PUT: { color: "#FF9500", label: "PUT" },
+  PATCH: { color: "#BF5AF2", label: "PATCH" },
+  DELETE: { color: errorRed, label: "DELETE" },
+};
