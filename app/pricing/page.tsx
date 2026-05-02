@@ -151,7 +151,7 @@ export default function PricingPage() {
               <h3 className="font-semibold text-foreground mb-4">
                 Payment Methods
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Card Payment */}
                 <div className="flex items-start gap-4 p-4 bg-secondary/30 rounded-lg">
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -176,6 +176,19 @@ export default function PricingPage() {
                     <h4 className="font-medium text-foreground mb-1">USDT (Tether)</h4>
                     <p className="text-sm text-muted-foreground">
                       Pay with USDT on Ethereum, BSC, or Tron networks. 5% discount on annual plans.
+                    </p>
+                  </div>
+                </div>
+
+                {/* OPay Bank Transfer */}
+                <div className="flex items-start gap-4 p-4 bg-secondary/30 rounded-lg">
+                  <div className="h-12 w-12 rounded-lg bg-[#00C853]/10 flex items-center justify-center flex-shrink-0">
+                    <span className="text-sm font-bold text-[#00C853]">OPay</span>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-foreground mb-1">OPay Bank Transfer</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Account: 7040295273. Instant NGN payments.
                     </p>
                   </div>
                 </div>
