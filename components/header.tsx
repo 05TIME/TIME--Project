@@ -9,9 +9,12 @@ export function Header() {
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-border bg-card">
       <div className="flex items-center gap-4">
-        <h1 className="text-xl font-semibold text-foreground">Temporal Analysis</h1>
+        <h1 className="text-xl font-semibold text-foreground">$TIMEOE Dashboard</h1>
         <span className="px-2 py-1 text-xs font-medium rounded bg-primary/10 text-primary">
-          Production
+          Causal AI
+        </span>
+        <span className="px-2 py-1 text-xs font-medium rounded bg-accent/10 text-accent">
+          + Grok
         </span>
       </div>
 

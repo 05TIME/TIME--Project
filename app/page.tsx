@@ -1,5 +1,6 @@
 import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
+import { TimeOEHero } from "@/components/timeoe-hero";
 import { TemporalChart } from "@/components/temporal-chart";
 import { CausalityCard } from "@/components/causality-card";
 import { RemittanceCard } from "@/components/remittance-card";
@@ -13,29 +14,30 @@ export default function Dashboard() {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 p-6 overflow-auto">
+          <TimeOEHero />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <TemporalChart
-              title="Agro Product Prices"
-              subtitle="New Benin Market"
+              title="Sample Time Series"
+              subtitle="Your Data Here"
               data={[
-                { time: "Jan", yam: 2400, cassava: 1800, palmOil: 3200 },
-                { time: "Feb", yam: 2600, cassava: 1900, palmOil: 3100 },
-                { time: "Mar", yam: 2800, cassava: 2100, palmOil: 3400 },
-                { time: "Apr", yam: 2500, cassava: 2000, palmOil: 3300 },
-                { time: "May", yam: 2900, cassava: 2200, palmOil: 3600 },
-                { time: "Jun", yam: 3100, cassava: 2400, palmOil: 3800 },
+                { time: "T1", seriesA: 24, seriesB: 31, seriesC: 52 },
+                { time: "T2", seriesA: 26, seriesB: 30, seriesC: 51 },
+                { time: "T3", seriesA: 28, seriesB: 29, seriesC: 49 },
+                { time: "T4", seriesA: 25, seriesB: 32, seriesC: 50 },
+                { time: "T5", seriesA: 29, seriesB: 34, seriesC: 48 },
+                { time: "T6", seriesA: 31, seriesB: 33, seriesC: 47 },
               ]}
             />
             <TemporalChart
-              title="Remittance Flows"
-              subtitle="Diaspora to Edo State"
+              title="Causal Flow Analysis"
+              subtitle="Input vs Output Variables"
               data={[
-                { time: "Jan", outgoing: 496000, incoming: 381000 },
-                { time: "Feb", outgoing: 520000, incoming: 390000 },
-                { time: "Mar", outgoing: 480000, incoming: 375000 },
-                { time: "Apr", outgoing: 510000, incoming: 400000 },
-                { time: "May", outgoing: 540000, incoming: 420000 },
-                { time: "Jun", outgoing: 580000, incoming: 450000 },
+                { time: "T1", input: 496, output: 381 },
+                { time: "T2", input: 520, output: 390 },
+                { time: "T3", input: 480, output: 375 },
+                { time: "T4", input: 510, output: 400 },
+                { time: "T5", input: 540, output: 420 },
+                { time: "T6", input: 580, output: 450 },
               ]}
               variant="area"
             />
@@ -49,20 +51,20 @@ export default function Dashboard() {
               status="positive"
             />
             <RemittanceCard
-              title="Total Remittances"
-              value="$2.1M"
-              subtitle="Last 30 days"
+              title="Variables Tracked"
+              value="128"
+              subtitle="Active time series"
             />
             <PriceCard
-              title="Yam Price Index"
-              value="3,100"
-              unit="NGN/basket"
+              title="Model Accuracy"
+              value="94.2"
+              unit="%"
               trend="up"
             />
             <CausalityCard
-              title="Counterfactual Delta"
+              title="Treatment Effect"
               value="0.23"
-              change="-5%"
+              change="+5%"
               status="neutral"
             />
           </div>
