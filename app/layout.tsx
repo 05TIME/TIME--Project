@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { UserProvider } from "@/lib/user-context";
 import { Analytics } from '@vercel/analytics/next';
@@ -34,6 +35,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} bg-background`}>
       <body className="antialiased min-h-screen">
+        {children}
+        <SpeedInsights />
         <UserProvider>
           {children}
         </UserProvider>
