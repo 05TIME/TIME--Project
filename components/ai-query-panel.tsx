@@ -1,32 +1,52 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Sparkles, Clock, GitBranch, Lightbulb } from "lucide-react";
+import { Send, Sparkles, Clock, GitBranch, Lightbulb, Zap } from "lucide-react";
+import { TIMEOE_CONFIG } from "@/lib/timeoe-engine";
 
 const exampleQueries = [
   {
     icon: Clock,
     text: "Analyze yam price trends for the last 6 months",
+    type: "temporal",
   },
   {
     icon: GitBranch,
     text: "What if remittances doubled last quarter?",
+    type: "counterfactual",
   },
   {
     icon: Lightbulb,
     text: "Find causal links between diaspora funding and agro prices",
+    type: "causality",
   },
 ];
+
+interface TimeOEResponse {
+  causalityScore: number;
+  isCausal: boolean;
+  optimalLag?: number;
+  direction?: string;
+  counterfactualDelta: number;
+  decomposition?: {
+    trend: string;
+    seasonality: string;
+    anomalies: string[];
+  };
+  forecast?: {
+    nextPeriod: number;
+    confidence95: [number, number];
+  };
+  summary: string;
+  methodology?: string;
+  engine?: string;
+  version?: string;
+}
 
 export function AIQueryPanel() {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState<null | {
-    causalityScore: number;
-    isCausal: boolean;
-    counterfactualDelta: number;
-    summary: string;
-  }>(null);
+  const [response, setResponse] = useState<TimeOEResponse | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,17 +80,23 @@ export function AIQueryPanel() {
 
   return (
     <div className="bg-card border border-border rounded-xl p-5">
-      <div className="flex items-center gap-2 mb-4">
-        <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Sparkles className="h-4 w-4 text-primary" />
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+            <Sparkles className="h-4 w-4 text-primary" />
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-foreground">
+              $TIMEOE + Grok Analysis
+            </h3>
+            <p className="text-xs text-muted-foreground">
+              Causal inference and counterfactual simulation
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-sm font-medium text-foreground">
-            AI Temporal Analysis
-          </h3>
-          <p className="text-xs text-muted-foreground">
-            Ask questions about your data using natural language
-          </p>
+        <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/10 rounded-full">
+          <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-xs font-medium text-green-500">Engine Active</span>
         </div>
       </div>
 
@@ -93,31 +119,100 @@ export function AIQueryPanel() {
 
       {response && (
         <div className="mb-4 p-4 bg-secondary/30 rounded-lg border border-border">
-          <div className="grid grid-cols-3 gap-4 mb-4">
+          {/* Engine Badge */}
+          <div className="flex items-center gap-2 mb-3">
+            <Zap className="h-3 w-3 text-primary" />
+            <span className="text-xs font-medium text-primary">
+              {response.engine || TIMEOE_CONFIG.engine}
+            </span>
+            <span className="text-xs text-muted-foreground">
+              v{response.version || TIMEOE_CONFIG.version}
+            </span>
+          </div>
+
+          {/* Main Metrics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
             <div>
               <p className="text-xs text-muted-foreground mb-1">Causality Score</p>
               <p className="text-lg font-semibold text-primary">
-                {response.causalityScore}
+                {typeof response.causalityScore === 'number' 
+                  ? `${(response.causalityScore * 100).toFixed(1)}%` 
+                  : response.causalityScore}
               </p>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">Is Causal</p>
-              <p className="text-lg font-semibold text-accent">
-                {response.isCausal ? "Yes" : "No"}
+              <p className="text-xs text-muted-foreground mb-1">Causal Link</p>
+              <p className={`text-lg font-semibold ${response.isCausal ? 'text-green-500' : 'text-muted-foreground'}`}>
+                {response.isCausal ? "Confirmed" : "Not Found"}
               </p>
             </div>
+            {response.direction && (
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Direction</p>
+                <p className="text-lg font-semibold text-accent">
+                  {response.direction}
+                </p>
+              </div>
+            )}
             <div>
-              <p className="text-xs text-muted-foreground mb-1">
-                Counterfactual Delta
-              </p>
-              <p className="text-lg font-semibold text-foreground">
-                {response.counterfactualDelta}
+              <p className="text-xs text-muted-foreground mb-1">Treatment Effect</p>
+              <p className={`text-lg font-semibold ${response.counterfactualDelta > 0 ? 'text-green-500' : response.counterfactualDelta < 0 ? 'text-red-500' : 'text-foreground'}`}>
+                {response.counterfactualDelta > 0 ? '+' : ''}{typeof response.counterfactualDelta === 'number' ? `${(response.counterfactualDelta * 100).toFixed(2)}%` : response.counterfactualDelta}
               </p>
             </div>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+
+          {/* Decomposition */}
+          {response.decomposition && (
+            <div className="grid grid-cols-3 gap-3 mb-4 p-3 bg-background/50 rounded-lg">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Trend</p>
+                <p className="text-sm text-foreground">{response.decomposition.trend}</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Seasonality</p>
+                <p className="text-sm text-foreground">{response.decomposition.seasonality}</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Anomalies</p>
+                <p className="text-sm text-foreground">
+                  {response.decomposition.anomalies?.length > 0 
+                    ? response.decomposition.anomalies.join(", ") 
+                    : "None"}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Forecast */}
+          {response.forecast && (
+            <div className="flex items-center gap-4 mb-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Next Period Forecast</p>
+                <p className="text-lg font-semibold text-primary">
+                  {response.forecast.nextPeriod?.toFixed(2)}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">95% Confidence</p>
+                <p className="text-sm text-muted-foreground">
+                  [{response.forecast.confidence95?.[0]?.toFixed(2)}, {response.forecast.confidence95?.[1]?.toFixed(2)}]
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Summary */}
+          <p className="text-sm text-muted-foreground leading-relaxed mb-3">
             {response.summary}
           </p>
+
+          {/* Methodology */}
+          {response.methodology && (
+            <p className="text-xs text-muted-foreground/70 italic">
+              Methodology: {response.methodology}
+            </p>
+          )}
         </div>
       )}
 

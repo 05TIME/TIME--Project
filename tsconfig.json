@@ -39,7 +39,6 @@
     "node_modules",
     "archived",
     "time-app",
-    "time-engine",
-    "src"
+    "time-engine"
   ]
 }
