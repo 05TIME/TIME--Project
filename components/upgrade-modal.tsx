@@ -93,21 +93,27 @@ export function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
           </p>
         </div>
 
-        {/* $TIME Token Option */}
-        <div className="px-6 pb-6">
-          <div className="p-4 bg-secondary/50 rounded-lg">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-lg bg-accent/20 flex items-center justify-center">
-                <span className="text-sm font-bold text-accent">$T</span>
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">Pay with $TIME</p>
-                <p className="text-xs text-muted-foreground">Use tokens for per-simulation access</p>
-              </div>
-              <button className="text-xs text-primary hover:underline">
-                Learn more
-              </button>
-            </div>
+        {/* Payment Options */}
+        <div className="px-6 pb-6 space-y-2">
+          <p className="text-xs text-muted-foreground mb-2">Payment methods:</p>
+          <div className="p-3 bg-secondary/50 rounded-lg flex items-center gap-3">
+            <svg className="h-5 w-5 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
+            <span className="text-sm text-foreground">Card (Visa, Mastercard, Amex)</span>
+          </div>
+          <div className="p-3 bg-secondary/50 rounded-lg flex items-center gap-3">
+            <span className="text-xs font-bold text-green-500">USDT</span>
+            <span className="text-sm text-foreground">Tether (ETH, BSC, Tron)</span>
+            <span className="ml-auto text-xs text-green-500">5% off</span>
+          </div>
+          <div className="p-3 bg-secondary/50 rounded-lg flex items-center gap-3">
+            <span className="text-xs font-bold text-[#F7931A]">BTC</span>
+            <span className="text-sm text-foreground truncate">Bitcoin</span>
+          </div>
+          <div className="p-3 bg-secondary/50 rounded-lg flex items-center gap-3">
+            <span className="text-xs font-bold text-[#00C853]">OPay</span>
+            <span className="text-sm text-foreground">Bank: 7040295273</span>
           </div>
         </div>
       </div>
