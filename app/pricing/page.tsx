@@ -151,7 +151,7 @@ export default function PricingPage() {
               <h3 className="font-semibold text-foreground mb-4">
                 Payment Methods
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Card Payment */}
                 <div className="flex items-start gap-4 p-4 bg-secondary/30 rounded-lg">
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -162,7 +162,7 @@ export default function PricingPage() {
                   <div>
                     <h4 className="font-medium text-foreground mb-1">Credit/Debit Card</h4>
                     <p className="text-sm text-muted-foreground">
-                      Visa, Mastercard, American Express. Secure payments via Stripe.
+                      Visa, Mastercard, Amex via Stripe.
                     </p>
                   </div>
                 </div>
@@ -175,7 +175,20 @@ export default function PricingPage() {
                   <div>
                     <h4 className="font-medium text-foreground mb-1">USDT (Tether)</h4>
                     <p className="text-sm text-muted-foreground">
-                      Pay with USDT on Ethereum, BSC, or Tron networks. 5% discount on annual plans.
+                      ETH, BSC, or Tron. 5% off annual.
+                    </p>
+                  </div>
+                </div>
+
+                {/* BTC Payment */}
+                <div className="flex items-start gap-4 p-4 bg-secondary/30 rounded-lg">
+                  <div className="h-12 w-12 rounded-lg bg-[#F7931A]/10 flex items-center justify-center flex-shrink-0">
+                    <span className="text-lg font-bold text-[#F7931A]">BTC</span>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-foreground mb-1">Bitcoin</h4>
+                    <p className="text-xs text-muted-foreground break-all">
+                      bc1qqma95egrez6f862tfv0wa4ygqv455waw22htjd
                     </p>
                   </div>
                 </div>
@@ -188,7 +201,7 @@ export default function PricingPage() {
                   <div>
                     <h4 className="font-medium text-foreground mb-1">OPay Bank Transfer</h4>
                     <p className="text-sm text-muted-foreground">
-                      Account: 7040295273. Instant NGN payments.
+                      Account: 7040295273
                     </p>
                   </div>
                 </div>

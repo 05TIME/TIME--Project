@@ -108,6 +108,10 @@ export function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
             <span className="ml-auto text-xs text-green-500">5% off</span>
           </div>
           <div className="p-3 bg-secondary/50 rounded-lg flex items-center gap-3">
+            <span className="text-xs font-bold text-[#F7931A]">BTC</span>
+            <span className="text-sm text-foreground truncate">Bitcoin</span>
+          </div>
+          <div className="p-3 bg-secondary/50 rounded-lg flex items-center gap-3">
             <span className="text-xs font-bold text-[#00C853]">OPay</span>
             <span className="text-sm text-foreground">Bank: 7040295273</span>
           </div>
