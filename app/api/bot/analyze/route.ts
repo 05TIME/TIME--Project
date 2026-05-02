@@ -38,13 +38,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const maxTokens = mode === "detailed" ? 1000 : 300;
+    const maxOutputTokens = mode === "detailed" ? 1000 : 300;
 
     const result = await generateText({
       model: "xai/grok-3-mini",
       system: TIMEOE_BOT_SYSTEM,
       prompt: `User Query: ${query}\n\nMode: ${mode}\nProvide ${mode === "detailed" ? "comprehensive" : "concise"} causal analysis.`,
-      maxTokens,
+      maxOutputTokens,
     });
 
     // Log usage for analytics
