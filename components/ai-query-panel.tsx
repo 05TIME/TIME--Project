@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Sparkles, Clock, GitBranch, Lightbulb, Zap } from "lucide-react";
+import { Send, Sparkles, Clock, GitBranch, Lightbulb, Zap, Lock, Crown } from "lucide-react";
 import { TIMEOE_CONFIG } from "@/lib/timeoe-engine";
+import { useUser } from "@/lib/user-context";
+import Link from "next/link";
 
 const exampleQueries = [
   {
@@ -47,12 +49,28 @@ export function AIQueryPanel() {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<TimeOEResponse | null>(null);
+  const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
+  const { tier, simulationsToday, maxSimulations, incrementSimulations, canRunSimulation } = useUser();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
 
+    // Check if user can run simulation
+    if (!canRunSimulation) {
+      setShowUpgradePrompt(true);
+      return;
+    }
+
+    // Increment simulation count
+    const allowed = incrementSimulations();
+    if (!allowed) {
+      setShowUpgradePrompt(true);
+      return;
+    }
+
     setIsLoading(true);
+    setShowUpgradePrompt(false);
     try {
       const res = await fetch("/api/temporal", {
         method: "POST",
@@ -94,11 +112,52 @@ export function AIQueryPanel() {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/10 rounded-full">
-          <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-xs font-medium text-green-500">Engine Active</span>
+        <div className="flex items-center gap-3">
+          {tier === "free" && (
+            <div className="flex items-center gap-1.5 px-2 py-1 bg-secondary rounded-full">
+              <span className="text-xs text-muted-foreground">
+                {simulationsToday}/{maxSimulations} today
+              </span>
+            </div>
+          )}
+          <div className="flex items-center gap-1.5 px-2 py-1 bg-green-500/10 rounded-full">
+            <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-xs font-medium text-green-500">Engine Active</span>
+          </div>
         </div>
       </div>
+
+      {/* Upgrade Prompt */}
+      {showUpgradePrompt && (
+        <div className="mb-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+          <div className="flex items-start gap-3">
+            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <Lock className="h-5 w-5 text-primary" />
+            </div>
+            <div className="flex-1">
+              <h4 className="font-medium text-foreground mb-1">Daily Limit Reached</h4>
+              <p className="text-sm text-muted-foreground mb-3">
+                You have used all {maxSimulations} free simulations for today. Upgrade to Pro for unlimited access.
+              </p>
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/pricing"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors"
+                >
+                  <Crown className="h-4 w-4" />
+                  Upgrade to Pro
+                </Link>
+                <button
+                  onClick={() => setShowUpgradePrompt(false)}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Maybe later
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {!response && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
