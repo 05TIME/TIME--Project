@@ -146,30 +146,37 @@ export default function PricingPage() {
               ))}
             </div>
 
-            {/* $TIME Token Section */}
+            {/* Payment Methods Section */}
             <div className="rounded-xl border border-border bg-card p-6">
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xl font-bold text-accent">$T</span>
+              <h3 className="font-semibold text-foreground mb-4">
+                Payment Methods
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Card Payment */}
+                <div className="flex items-start gap-4 p-4 bg-secondary/30 rounded-lg">
+                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-foreground mb-1">Credit/Debit Card</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Visa, Mastercard, American Express. Secure payments via Stripe.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-1">
-                    Pay with $TIME Tokens
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Use $TIME tokens for pay-per-simulation runs. Stake tokens for higher limits, 
-                    priority queue access, and revenue sharing. Available on TON and Solana.
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    <div className="px-3 py-1.5 bg-secondary rounded-lg text-xs text-foreground">
-                      10-100 $TIME per deep simulation
-                    </div>
-                    <div className="px-3 py-1.5 bg-secondary rounded-lg text-xs text-foreground">
-                      Stake for priority access
-                    </div>
-                    <div className="px-3 py-1.5 bg-secondary rounded-lg text-xs text-foreground">
-                      Burn mechanism on premium runs
-                    </div>
+                
+                {/* USDT Payment */}
+                <div className="flex items-start gap-4 p-4 bg-secondary/30 rounded-lg">
+                  <div className="h-12 w-12 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                    <span className="text-lg font-bold text-green-500">USDT</span>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-foreground mb-1">USDT (Tether)</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Pay with USDT on Ethereum, BSC, or Tron networks. 5% discount on annual plans.
+                    </p>
                   </div>
                 </div>
               </div>
