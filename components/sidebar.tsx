@@ -24,10 +24,10 @@ const navigation = [
 ];
 
 const dataNav = [
-  { name: "Time Series", href: "/timeseries", icon: TrendingUp },
-  { name: "Data Sources", href: "/datasources", icon: Database },
+  { name: "Upload Data", href: "/upload", icon: TrendingUp },
+  { name: "Datasets", href: "/datasets", icon: Database },
   { name: "Variables", href: "/variables", icon: FileText },
-  { name: "Models", href: "/models", icon: Users },
+  { name: "Saved Models", href: "/models", icon: Users },
 ];
 
 const bottomNav = [
@@ -91,7 +91,7 @@ export function Sidebar() {
 
         <div>
           <p className="px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
-            Data Sources
+            Your Data
           </p>
           <ul className="space-y-1">
             {dataNav.map((item) => {

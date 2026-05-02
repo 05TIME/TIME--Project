@@ -7,17 +7,17 @@ import { TIMEOE_CONFIG } from "@/lib/timeoe-engine";
 const exampleQueries = [
   {
     icon: Clock,
-    text: "Analyze global temperature trends for the last decade",
+    text: "Decompose this time series into trend, seasonality, and anomalies",
     type: "temporal",
   },
   {
     icon: GitBranch,
-    text: "What if interest rates doubled last quarter?",
+    text: "What would have happened if variable X increased by 20%?",
     type: "counterfactual",
   },
   {
     icon: Lightbulb,
-    text: "Find causal links between GDP growth and unemployment",
+    text: "Does X cause Y, or is the correlation spurious?",
     type: "causality",
   },
 ];
@@ -60,8 +60,8 @@ export function AIQueryPanel() {
         body: JSON.stringify({
           prompt: query,
           data: {
-            context: "Global temporal analysis",
-            timestamps: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            context: "Universal temporal analysis - any domain",
+            timestamps: ["T1", "T2", "T3", "T4", "T5", "T6"],
           },
         }),
       });

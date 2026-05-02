@@ -33,7 +33,7 @@ export function TimeOEHero() {
           </div>
           <p className="text-muted-foreground max-w-xl">
             An AI system that embodies the concept of time as the father of AI. 
-            A global platform for advanced temporal manipulation, prediction, and causal analysis across any domain.
+            Upload any time series data from any domain - healthcare, finance, climate, supply chain, or beyond - and discover causal truths.
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 py-2 bg-card rounded-lg border border-border">

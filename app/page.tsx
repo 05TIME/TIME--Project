@@ -17,27 +17,27 @@ export default function Dashboard() {
           <TimeOEHero />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <TemporalChart
-              title="Global Economic Indicators"
-              subtitle="World Bank Data"
+              title="Sample Time Series"
+              subtitle="Your Data Here"
               data={[
-                { time: "Jan", gdp: 2.4, inflation: 3.1, unemployment: 5.2 },
-                { time: "Feb", gdp: 2.6, inflation: 3.0, unemployment: 5.1 },
-                { time: "Mar", gdp: 2.8, inflation: 2.9, unemployment: 4.9 },
-                { time: "Apr", gdp: 2.5, inflation: 3.2, unemployment: 5.0 },
-                { time: "May", gdp: 2.9, inflation: 3.4, unemployment: 4.8 },
-                { time: "Jun", gdp: 3.1, inflation: 3.3, unemployment: 4.7 },
+                { time: "T1", seriesA: 24, seriesB: 31, seriesC: 52 },
+                { time: "T2", seriesA: 26, seriesB: 30, seriesC: 51 },
+                { time: "T3", seriesA: 28, seriesB: 29, seriesC: 49 },
+                { time: "T4", seriesA: 25, seriesB: 32, seriesC: 50 },
+                { time: "T5", seriesA: 29, seriesB: 34, seriesC: 48 },
+                { time: "T6", seriesA: 31, seriesB: 33, seriesC: 47 },
               ]}
             />
             <TemporalChart
-              title="Cross-Border Capital Flows"
-              subtitle="Global Markets"
+              title="Causal Flow Analysis"
+              subtitle="Input vs Output Variables"
               data={[
-                { time: "Jan", inflows: 496000, outflows: 381000 },
-                { time: "Feb", inflows: 520000, outflows: 390000 },
-                { time: "Mar", inflows: 480000, outflows: 375000 },
-                { time: "Apr", inflows: 510000, outflows: 400000 },
-                { time: "May", inflows: 540000, outflows: 420000 },
-                { time: "Jun", inflows: 580000, outflows: 450000 },
+                { time: "T1", input: 496, output: 381 },
+                { time: "T2", input: 520, output: 390 },
+                { time: "T3", input: 480, output: 375 },
+                { time: "T4", input: 510, output: 400 },
+                { time: "T5", input: 540, output: 420 },
+                { time: "T6", input: 580, output: 450 },
               ]}
               variant="area"
             />
@@ -51,20 +51,20 @@ export default function Dashboard() {
               status="positive"
             />
             <RemittanceCard
-              title="Data Points Analyzed"
-              value="2.1M"
-              subtitle="Last 30 days"
+              title="Variables Tracked"
+              value="128"
+              subtitle="Active time series"
             />
             <PriceCard
-              title="Confidence Index"
+              title="Model Accuracy"
               value="94.2"
-              unit="% accuracy"
+              unit="%"
               trend="up"
             />
             <CausalityCard
-              title="Counterfactual Delta"
+              title="Treatment Effect"
               value="0.23"
-              change="-5%"
+              change="+5%"
               status="neutral"
             />
           </div>
