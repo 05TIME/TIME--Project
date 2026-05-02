@@ -1,6 +1,6 @@
 
 import express from 'express';
-import Engine from '../$TIMEŒ-Engine/src/engine';
+import Engine from '../time-engine/src/engine';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,11 +29,4 @@ app.listen(port, (): void => {
     console.log(`TIMEŒ App is running on http://localhost:${port}`);
   });
 
-const tsConfig = {
-  "compilerOptions": {
-    "rootDirs": ["./src", "../$TIMEŒ-Engine/src"],
-    // other options
-  }
-};
 
-// other configurations
