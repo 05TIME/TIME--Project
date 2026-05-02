@@ -12,6 +12,7 @@ import {
   FileText,
   Users,
   Crown,
+  Bot,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,6 +23,7 @@ const navigation = [
   { name: "Temporal Analysis", href: "/temporal", icon: Clock, badge: "AI" },
   { name: "Causality", href: "/causality", icon: GitBranch },
   { name: "Counterfactuals", href: "/counterfactuals", icon: Sparkles },
+  { name: "Telegram Bot", href: "/bot", icon: Bot, badge: "NEW" },
 ];
 
 const dataNav = [
