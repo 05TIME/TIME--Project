@@ -17,27 +17,27 @@ export default function Dashboard() {
           <TimeOEHero />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <TemporalChart
-              title="Agro Product Prices"
-              subtitle="New Benin Market"
+              title="Global Economic Indicators"
+              subtitle="World Bank Data"
               data={[
-                { time: "Jan", yam: 2400, cassava: 1800, palmOil: 3200 },
-                { time: "Feb", yam: 2600, cassava: 1900, palmOil: 3100 },
-                { time: "Mar", yam: 2800, cassava: 2100, palmOil: 3400 },
-                { time: "Apr", yam: 2500, cassava: 2000, palmOil: 3300 },
-                { time: "May", yam: 2900, cassava: 2200, palmOil: 3600 },
-                { time: "Jun", yam: 3100, cassava: 2400, palmOil: 3800 },
+                { time: "Jan", gdp: 2.4, inflation: 3.1, unemployment: 5.2 },
+                { time: "Feb", gdp: 2.6, inflation: 3.0, unemployment: 5.1 },
+                { time: "Mar", gdp: 2.8, inflation: 2.9, unemployment: 4.9 },
+                { time: "Apr", gdp: 2.5, inflation: 3.2, unemployment: 5.0 },
+                { time: "May", gdp: 2.9, inflation: 3.4, unemployment: 4.8 },
+                { time: "Jun", gdp: 3.1, inflation: 3.3, unemployment: 4.7 },
               ]}
             />
             <TemporalChart
-              title="Remittance Flows"
-              subtitle="Diaspora to Edo State"
+              title="Cross-Border Capital Flows"
+              subtitle="Global Markets"
               data={[
-                { time: "Jan", outgoing: 496000, incoming: 381000 },
-                { time: "Feb", outgoing: 520000, incoming: 390000 },
-                { time: "Mar", outgoing: 480000, incoming: 375000 },
-                { time: "Apr", outgoing: 510000, incoming: 400000 },
-                { time: "May", outgoing: 540000, incoming: 420000 },
-                { time: "Jun", outgoing: 580000, incoming: 450000 },
+                { time: "Jan", inflows: 496000, outflows: 381000 },
+                { time: "Feb", inflows: 520000, outflows: 390000 },
+                { time: "Mar", inflows: 480000, outflows: 375000 },
+                { time: "Apr", inflows: 510000, outflows: 400000 },
+                { time: "May", inflows: 540000, outflows: 420000 },
+                { time: "Jun", inflows: 580000, outflows: 450000 },
               ]}
               variant="area"
             />
@@ -51,14 +51,14 @@ export default function Dashboard() {
               status="positive"
             />
             <RemittanceCard
-              title="Total Remittances"
-              value="$2.1M"
+              title="Data Points Analyzed"
+              value="2.1M"
               subtitle="Last 30 days"
             />
             <PriceCard
-              title="Yam Price Index"
-              value="3,100"
-              unit="NGN/basket"
+              title="Confidence Index"
+              value="94.2"
+              unit="% accuracy"
               trend="up"
             />
             <CausalityCard

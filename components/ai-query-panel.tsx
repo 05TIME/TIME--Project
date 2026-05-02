@@ -7,17 +7,17 @@ import { TIMEOE_CONFIG } from "@/lib/timeoe-engine";
 const exampleQueries = [
   {
     icon: Clock,
-    text: "Analyze yam price trends for the last 6 months",
+    text: "Analyze global temperature trends for the last decade",
     type: "temporal",
   },
   {
     icon: GitBranch,
-    text: "What if remittances doubled last quarter?",
+    text: "What if interest rates doubled last quarter?",
     type: "counterfactual",
   },
   {
     icon: Lightbulb,
-    text: "Find causal links between diaspora funding and agro prices",
+    text: "Find causal links between GDP growth and unemployment",
     type: "causality",
   },
 ];
@@ -60,7 +60,7 @@ export function AIQueryPanel() {
         body: JSON.stringify({
           prompt: query,
           data: {
-            context: "Edo State diaspora and agricultural data",
+            context: "Global temporal analysis",
             timestamps: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
           },
         }),

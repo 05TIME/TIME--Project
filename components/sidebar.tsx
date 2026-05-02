@@ -24,10 +24,10 @@ const navigation = [
 ];
 
 const dataNav = [
-  { name: "Agro Prices", href: "/prices", icon: TrendingUp },
-  { name: "Remittances", href: "/remittances", icon: Database },
-  { name: "Land Records", href: "/land", icon: FileText },
-  { name: "Diaspora Users", href: "/users", icon: Users },
+  { name: "Time Series", href: "/timeseries", icon: TrendingUp },
+  { name: "Data Sources", href: "/datasources", icon: Database },
+  { name: "Variables", href: "/variables", icon: FileText },
+  { name: "Models", href: "/models", icon: Users },
 ];
 
 const bottomNav = [
