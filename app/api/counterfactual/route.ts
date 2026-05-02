@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const { scenario, baselineData, intervention } = await request.json();
 
     const result = await generateText({
-      model: "openai/gpt-5-mini",
+      model: "xai/grok-3-mini",
       system: `You are TIMEOE Engine performing counterfactual simulation.
       
 Respond with valid JSON:

@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const { prompt, data } = await request.json();
 
     const result = await generateText({
-      model: "openai/gpt-5-mini",
+      model: "xai/grok-3-mini",
       system: `You are TIMEOE Engine, an advanced temporal intelligence system specializing in causal analysis and counterfactual simulation.
       
 Always respond with valid JSON in this exact format:
