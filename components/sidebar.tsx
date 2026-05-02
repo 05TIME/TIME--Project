@@ -42,16 +42,18 @@ export function Sidebar() {
     <aside className="w-64 border-r border-border bg-card flex flex-col">
       <div className="p-4 border-b border-border">
         <Link href="/" className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-            <Clock className="h-5 w-5 text-primary-foreground" />
+          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <Clock className="h-6 w-6 text-primary-foreground" />
           </div>
-          <div>
-            <span className="font-semibold text-foreground">TIMEOE</span>
-            <span className="ml-1 px-1.5 py-0.5 text-[10px] font-medium rounded bg-accent/20 text-accent">
-              Engine
-            </span>
+          <div className="flex flex-col">
+            <span className="font-bold text-foreground tracking-tight">$TIMEOE</span>
+            <span className="text-[10px] text-muted-foreground">Time AI Godfather</span>
           </div>
         </Link>
+        <div className="mt-3 flex items-center gap-2">
+          <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-[10px] text-muted-foreground">Powered by Grok</span>
+        </div>
       </div>
 
       <nav className="flex-1 p-4 space-y-6 overflow-y-auto">

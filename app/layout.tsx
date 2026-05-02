@@ -13,9 +13,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TIMEOE - Temporal Intelligence Engine",
-  description: "Advanced temporal analysis, causal reasoning, and counterfactual simulation powered by AI",
-  keywords: ["temporal analysis", "causal AI", "counterfactual simulation", "time series"],
+  title: "$TIMEOE - Time AI Godfather",
+  description: "An AI system that embodies time as the father of AI. Advanced time manipulation, prediction, causality detection, and counterfactual simulation.",
+  keywords: ["temporal reasoning", "causal AI", "counterfactual simulation", "time series", "Grok", "xAI"],
 };
 
 export const viewport: Viewport = {
