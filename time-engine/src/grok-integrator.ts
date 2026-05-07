@@ -1,25 +1,24 @@
-import { xai } from '@ai-sdk/xai';
-import { generateText } from 'ai';
-import { z } from 'zod';
+# time-engine/src/grok_integration.py (New File - Add to Your Repo)
+from grok_api import GrokClient  # xAI SDK
+from temporal import TemporalReasoner
+from causality import CausalityDetector
+from counterfactual import CounterfactualSimulator
 
-const grokModel = xai('grok-4'); // or grok-3 for faster/cheaper
-
-export async function runTemporalAnalysis(prompt: string, data: any) {
-  const result = await generateText({
-    model: grokModel,
-    system: `You are $TIMEŒ Engine + Grok hybrid. 
-    Always output in this JSON: { "causalityScore": number, "isCausal": boolean, "counterfactualDelta": number, "summary": string, "timelineViz": string }`,
-    prompt: `Analyze this temporal data: ${JSON.stringify(data)}. 
-    Question: ${prompt}. 
-    Use causal reasoning + counterfactual simulation.`,
-  });
-
-  return JSON.parse(result.text);
-}
-
-// Example usage in your existing routes
-const analysis = await runTemporalAnalysis(
-  "What if we double the intervention variable?",
-  { timestamps: [...], cause: [...], effect: [...] }
-);
-console.log(analysis);
+class TIME_Grok_Fusion:
+    def __init__(self, grok_api_key):
+        self.grok = GrokClient(api_key=grok_api_key)  # xAI Grok-4.3 or latest
+        self.temporal = TemporalReasoner()
+        self.causality = CausalityDetector()
+        self.counterfactual = CounterfactualSimulator()
+    
+    def fused_predict(self, data, horizon="2026-2030"):
+        # Grok truth-seeking layer + $TIMEŒ temporal causality
+        grok_insight = self.grok.reason("Analyze causal chains in this temporal data for truth alignment", data)
+        past = self.temporal.analyze(data)
+        future = self.counterfactual.simulate(grok_insight + data, horizon)
+        return {
+            "grok_truth": grok_insight,
+            "timeoe_past": past,
+            "timeoe_future": future,
+            "symbiosis_score": "High-Bandwidth Neuralink Ready"
+        }
