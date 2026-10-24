@@ -1,5 +1,7 @@
 import { defineConfig } from "vitest/config";
+import { fileURLToPath } from "node:url";
 
 export default defineConfig({
-  test: { include: ["time-app/timeoe-engine/test/**/*.test.ts"] },
+  resolve: { alias: { "@": fileURLToPath(new URL(".", import.meta.url)) } },
+  test: { include: ["time-app/timeoe-engine/test/**/*.test.ts", "test/**/*.test.ts"] },
 });
