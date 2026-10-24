@@ -1,8 +1,11 @@
 import { generateText } from "ai";
+import { CausalityInput, parseBody } from "@/lib/api-schemas";
 
 export async function POST(request: Request) {
   try {
-    const { cause, effect, timestamps } = await request.json();
+    const parsed = await parseBody(request, CausalityInput);
+    if (!parsed.ok) return parsed.response;
+    const { cause, effect, timestamps } = parsed.data;
 
     const result = await generateText({
       model: "xai/grok-3-mini",

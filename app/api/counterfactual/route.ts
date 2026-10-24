@@ -1,4 +1,5 @@
 import { generateText } from "ai";
+import { CounterfactualInput, parseBody } from "@/lib/api-schemas";
 
 // $TIMEOE Causal Temporal Layer - Grok Integration
 const TIMEOE_CAUSAL_SYSTEM = `You are the $TIMEOE Causal Temporal Engine integrated with xAI Grok.
@@ -58,7 +59,9 @@ Respond with valid JSON:
 
 export async function POST(request: Request) {
   try {
-    const { scenario, baselineData, intervention, timeRange } = await request.json();
+    const parsed = await parseBody(request, CounterfactualInput);
+    if (!parsed.ok) return parsed.response;
+    const { scenario, baselineData, intervention, timeRange } = parsed.data;
 
     const result = await generateText({
       model: "xai/grok-3-mini",

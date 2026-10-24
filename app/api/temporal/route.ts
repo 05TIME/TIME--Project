@@ -1,4 +1,5 @@
 import { generateText } from "ai";
+import { parseBody, TemporalInput } from "@/lib/api-schemas";
 
 // $TIMEOE Causal Temporal Layer - Core Engine
 const TIMEOE_TEMPORAL_SYSTEM = `You are the $TIMEOE Temporal Intelligence Engine powered by xAI Grok.
@@ -50,7 +51,9 @@ Respond with valid JSON:
 
 export async function POST(request: Request) {
   try {
-    const { prompt, data, analysisType } = await request.json();
+    const parsed = await parseBody(request, TemporalInput);
+    if (!parsed.ok) return parsed.response;
+    const { prompt, data, analysisType } = parsed.data;
 
     const result = await generateText({
       model: "xai/grok-3-mini",

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { BotUsageInput, parseBody } from "@/lib/api-schemas";
 
 // In-memory storage for demo (use database in production)
 const userUsage = new Map<string, { 
@@ -52,14 +53,12 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { userId, action } = await request.json();
-
-    if (!userId) {
-      return NextResponse.json({ error: "userId required" }, { status: 400 });
-    }
+    const parsed = await parseBody(request, BotUsageInput);
+    if (!parsed.ok) return parsed.response;
+    const { userId, action } = parsed.data;
 
     const today = new Date().toISOString().split("T")[0];
-    let usage = userUsage.get(userId) || {
+    const usage = userUsage.get(userId) || {
       queries: 0,
       tier: "free" as const,
       lastReset: today,
