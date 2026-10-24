@@ -1,5 +1,6 @@
 import { generateText } from "ai";
 import { NextResponse } from "next/server";
+import { BotAnalyzeInput, parseBody } from "@/lib/api-schemas";
 
 // $TIMEOE Bot API - Causal Analysis Endpoint
 const TIMEOE_BOT_SYSTEM = `You are @TIMEOai_Bot, the Telegram interface for the $TIMEOE Causal Temporal Engine.
@@ -28,15 +29,17 @@ Response format for analysis:
 
 export async function POST(request: Request) {
   try {
-    const { query, userId, chatId, mode = "quick" } = await request.json();
-
-    // Validate API key for bot requests
+    // Validate API key for bot requests (before reading the body)
     const authHeader = request.headers.get("authorization");
     const botApiKey = process.env.TIMEOE_BOT_API_KEY;
-    
+
     if (botApiKey && authHeader !== `Bearer ${botApiKey}`) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    const parsed = await parseBody(request, BotAnalyzeInput);
+    if (!parsed.ok) return parsed.response;
+    const { query, userId, chatId, mode } = parsed.data;
 
     const maxOutputTokens = mode === "detailed" ? 1000 : 300;
 

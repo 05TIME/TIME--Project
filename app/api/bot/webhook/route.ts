@@ -1,24 +1,27 @@
 import { NextResponse } from "next/server";
+import { parseBody, TelegramUpdate } from "@/lib/api-schemas";
 
 // Telegram Webhook handler (optional - can handle updates directly in Next.js)
 export async function POST(request: Request) {
   try {
-    const update = await request.json();
-    
-    // Verify webhook secret
+    // Verify webhook secret (before reading the body)
     const secret = request.headers.get("x-telegram-bot-api-secret-token");
     if (process.env.TELEGRAM_WEBHOOK_SECRET && secret !== process.env.TELEGRAM_WEBHOOK_SECRET) {
       return NextResponse.json({ error: "Invalid secret" }, { status: 403 });
     }
 
-    // Log incoming update
-    console.log("[TIMEOai_Bot] Webhook update:", JSON.stringify(update, null, 2));
+    const parsed = await parseBody(request, TelegramUpdate);
+    if (!parsed.ok) return parsed.response;
+    const update = parsed.data;
+
+    // Log only the update id (message bodies may contain personal data)
+    console.log("[TIMEOai_Bot] Webhook update:", update.update_id ?? "unknown");
 
     // Handle message
     if (update.message) {
       const chatId = update.message.chat.id;
       const text = update.message.text;
-      const userId = update.message.from.id;
+      const userId = update.message.from?.id;
 
       // Process command or query
       if (text?.startsWith("/")) {
