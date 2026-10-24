@@ -1,16 +1,14 @@
 {
   "name": "time-app",
   "version": "1.0.0",
-  "description": "A user-friendly application that leverage"
-  
+  "description": "A user-friendly application that leverages the TIMEŒ causal engine.",
+  "private": true,
   "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "express": "^4.17.1"
   },
-  "devDependencies": {cd ../$TIMEŒ-App
-  npm install
-
+  "devDependencies": {
     "typescript": "^4.4.3",
     "ts-node": "^10.4.0",
     "jest": "^27.0.6",
@@ -18,17 +16,7 @@
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yourusername/$TIMEŒ-App.git"
-  },
-  "keywords": [
-    "causal",
-    "AI",
-    "temporal",
-    "reasoning",
-    "simulation"
-  ],
+  "keywords": ["causal", "AI", "temporal", "reasoning", "simulation"],
   "author": "Randy Idaeho",
   "license": "MIT"
 }
