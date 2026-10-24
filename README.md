@@ -53,3 +53,17 @@ npm run build            # next build
 ## License
 
 MIT
+
+## Deterministic Agent Engine (v1)
+
+`time-app/timeoe-engine/src/engine/agent` is a **deterministic, replayable, explainable** alternative to LLM agents. An agent is typed state + observations + priority-ordered rules (guard → action → reason) + a pure reducer. The step loop uses a seeded RNG (mulberry32) and an injected fixed clock, with no hidden I/O. Each step records inputs, every rule evaluated, the rule that fired and why, the action, and the state before and after. The whole trace is canonical-JSON serialized and sha256-hashed, so the same seed and inputs always give the same `traceHash`. Any run can be replayed bit-for-bit (`replayTrace`) or asked "what if?" (`whatIf`: change one observation, rerun, get a decision diff). The worked example (`lekki-pricing`) sets prices and handles bookings for the Lekki Phase 1 apartment using **EXAMPLE DATA** only, and uses the engine's `linearTrend` and AR(1) `forecast`.
+
+Adapters: plain functions (`runAgent`, `handleAgentRequest`), `POST /api/agent` (Zod-validated `run | whatIf | replay`), and `deterministicAgentTool` (name, description, JSON schema, invoke) for LLMs and other apps.
+
+```ts
+import { runAgent, replayTrace, whatIf, explainTrace, lekkiPricingAgent, LEKKI_EXAMPLE_INPUT } from "@/time-app/timeoe-engine/src/engine/agent";
+const trace = runAgent(lekkiPricingAgent, LEKKI_EXAMPLE_INPUT);           // same seed+inputs => same trace.traceHash
+console.log(explainTrace(trace));                                          // one line per decision, with the reason
+console.log(replayTrace(lekkiPricingAgent, trace).ok);                     // true: reproduces bit-for-bit
+console.log(whatIf(lekkiPricingAgent, LEKKI_EXAMPLE_INPUT, { step: 3, patch: { occupancy7d: 0.9 } }).diffs);
+```
