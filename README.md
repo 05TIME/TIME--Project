@@ -11,7 +11,7 @@ $TIMEŒ is an experimental toolkit for analysing time series: what happens over 
 | `app/api/bot/*` | Bot analyze, usage, and webhook routes | Grok-based |
 | `time-app/timeoe-engine/src/engine/` | The TypeScript engine (no runtime dependencies) | Implemented and tested |
 | `time-app/timeoe-engine/test/` | Vitest unit tests for the engine | 11 tests |
-| `src/`, `time-engine/` | Earlier Express scaffolding | Incomplete; it imports modules that don't exist and makes `tsc` / `next build` fail |
+| `src/`, `time-engine/` | Earlier Express scaffolding, not used by the Next.js app | Incomplete and left out of the build (see below) |
 
 ### Engine modules
 
@@ -42,8 +42,13 @@ The AI routes need an AI Gateway key (`AI_GATEWAY_API_KEY`) or a Vercel-linked p
 ```bash
 npm test                 # vitest: engine unit tests
 npm run typecheck:engine # strict tsc on the engine and tests
-npm run typecheck        # whole repo; currently fails because of the legacy src/ scaffolding
+npm run typecheck        # whole Next.js app
+npm run build            # next build
 ```
+
+### Why `src/` is left out of the build
+
+`src/` is an old Express server. It imports modules that don't exist (`../time-engine/src/engine`, `./TimelineDashboard`, `./DataService` and others), and nothing in `app/`, `components/` or `lib/` imports it. `tsconfig.json` leaves it out (as it already did for `time-app` and `time-engine`), so `tsc` and `next build` pass. The code is still in the repo for reference. Finish it or delete it before you put it back in the build.
 
 ## License
 
