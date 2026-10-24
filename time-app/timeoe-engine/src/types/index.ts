@@ -1,38 +1,32 @@
-export type TimeStampedData = {
-    timestamp: Date;
-    data: any;
-};
+/** A numeric time series: values ordered in time, evenly spaced. */
+export type Series = readonly number[];
 
-export type Event = {
-    id: string;
-    type: string;
-    payload: any;
-};
+export interface LagCorrelation { lag: number; r: number }
 
-export type CausalRelation = {
-    cause: Event;
-    effect: Event;
-    strength: number;
-};
+export interface GrangerResult {
+  lag: number;
+  fStatistic: number;
+  dfNumerator: number;
+  dfDenominator: number;
+  pValue: number;
+  /** true when pValue < alpha */
+  significant: boolean;
+}
 
-export type Variables = {
-    [key: string]: any;
-};
+export interface TrendResult { slope: number; intercept: number; r2: number }
 
-export type SimulationResult = {
-    originalState: any;
-    forkedState: any;
-    outcome: any;
-};
+export interface ChangePoint { index: number; meanBefore: number; meanAfter: number; score: number }
 
-export type State = {
-    [key: string]: any;
-};
+export interface ARModel { order: number; intercept: number; coefficients: number[]; residualVariance: number }
 
-export type ForkedState = {
-    [key: string]: any;
-};
+export interface Intervention {
+  /** index (into the forecast horizon, 0-based) at which the intervention starts */
+  start: number;
+  /** "set" replaces the value, "add" shifts it */
+  mode: "set" | "add";
+  value: number;
+  /** number of steps it lasts; default: until the end */
+  duration?: number;
+}
 
-export type FilteredData = {
-    [key: string]: any;
-};
+export interface CounterfactualResult { baseline: number[]; counterfactual: number[]; effect: number[]; model: ARModel }
