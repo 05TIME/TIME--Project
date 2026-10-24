@@ -24,6 +24,7 @@ const navigation = [
   { name: "Causality", href: "/causality", icon: GitBranch },
   { name: "Counterfactuals", href: "/counterfactuals", icon: Sparkles },
   { name: "Telegram Bot", href: "/bot", icon: Bot, badge: "NEW" },
+  { name: "Agent Board", href: "/agent-board", icon: Users },
 ];
 
 const dataNav = [
