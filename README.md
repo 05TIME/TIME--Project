@@ -53,3 +53,17 @@ npm run build            # next build
 ## License
 
 MIT
+
+## Agent Board (`/agent-board`)
+
+This is a read-only dashboard of the TIME-CORP agent board: agents, proposed spends with their simulation decisions, an AR(1) what-if chart of the treasury, and an audit log. The page cannot spend money or dispatch tasks.
+
+### Live data
+
+The board is reached through an MCP connector, and a deployed web app can't call it. Instead, the page reads a redacted JSON snapshot:
+
+1. Get raw output from the read-only tools `board_get_state` and `board_analyze_past`, and save each to a file.
+2. Run `npm run board:snapshot -- state.json analysis.json`. This writes `data/board-snapshot.json`. Wallet addresses are truncated; local URLs, file paths, token-like strings and telemetry fields outside the allow-list are removed.
+3. Commit the file and redeploy. Or host the snapshot JSON anywhere public and set `BOARD_SNAPSHOT_URL`; the page then re-fetches it every 5 minutes (ISR), with no redeploy needed.
+
+The page tries `BOARD_SNAPSHOT_URL` first, then the bundled snapshot, then built-in demo data.

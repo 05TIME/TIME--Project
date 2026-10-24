@@ -10,7 +10,8 @@
     "lint": "next lint",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "typecheck:engine": "tsc --noEmit -p time-app/timeoe-engine/tsconfig.engine.json"
+    "typecheck:engine": "tsc --noEmit -p time-app/timeoe-engine/tsconfig.engine.json",
+    "board:snapshot": "tsx scripts/refresh-board-snapshot.ts"
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.0",
@@ -34,6 +35,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "tailwindcss": "^4.0.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.7.0",
     "vitest": "^4.1.12"
   }

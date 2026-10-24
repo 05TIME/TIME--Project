@@ -2,11 +2,14 @@ import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
 import { getBoardClient } from "@/lib/agent-board/client";
 import { buildAuditLog, projectSpend, round } from "@/lib/agent-board/model";
+import { AgentEfficiencyChart, TreasuryProjectionChart } from "@/components/agent-board-charts";
+
+export const revalidate = 300;
 
 const fmt = (ts: number): string => new Date(ts * 1000).toISOString().replace("T", " ").slice(0, 16) + " UTC";
 
 export default async function AgentBoardPage() {
-  const client = getBoardClient();
+  const client = await getBoardClient();
   const [state, past] = await Promise.all([client.getState(), client.analyzePast()]);
   const audit = buildAuditLog(state);
   const spends = state.task_history.map((t) => ({ task: t, proj: projectSpend(state, t) }));
@@ -21,7 +24,7 @@ export default async function AgentBoardPage() {
             <h1 className="text-2xl font-bold text-foreground mb-2">Agent Board</h1>
             <p className="text-muted-foreground">
               Simulate before spend: every proposed task is checked by a counterfactual before any treasury draw.
-              {client.source === "demo" && " Showing demo data (a read-only snapshot); nothing here can spend."}
+              {client.source === "demo" ? " Showing demo data." : ` Read-only snapshot of the live board, generated ${client.generatedAt ?? "unknown"}. Wallet addresses are truncated.`} Nothing on this page can spend.
             </p>
           </div>
 
@@ -37,6 +40,17 @@ export default async function AgentBoardPage() {
                 <div className="text-xl font-semibold text-foreground">{v}</div>
               </div>
             ))}
+          </section>
+
+          <section className="grid gap-4 lg:grid-cols-2">
+            <div>
+              <h2 className="text-lg font-semibold text-foreground mb-3">Treasury what-if (AR(1), illustrative)</h2>
+              <TreasuryProjectionChart series={spends.map(({ task: t, proj }) => ({ taskId: t.task_id, label: `${t.target_agent}: ${t.instruction.slice(0, 50)} (${t.budget_sol} SOL)`, approved: proj.approved, baseline: proj.baseline, withSpend: proj.withSpend, method: proj.method === "ar1" ? "AR(1) fit" : "flat fallback" }))} />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-foreground mb-3">Agent efficiency</h2>
+              <AgentEfficiencyChart points={Object.entries(state.agents).map(([agent, a]) => ({ agent, efficiency: a.efficiency, completed: past.agent_velocity[agent]?.completed_count ?? 0 }))} />
+            </div>
           </section>
 
           <section>
