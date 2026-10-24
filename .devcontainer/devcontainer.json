@@ -2,17 +2,3 @@
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {}
 }
-version: '3.8'
-services:
-  db:
-    image: timescale/timescaledb:latest-pg16
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: yourpassword
-      POSTGRES_DB: edo_time
-    ports:
-      - "5432:5432"
-    volumes:
-      - db-data:/var/lib/postgresql/data
-volumes:
-  db-data:
