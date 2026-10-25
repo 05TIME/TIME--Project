@@ -1,3 +1,6 @@
+// Generic JSON payload exchanged with the engine API.
+export type Data = Record<string, unknown>;
+
 export async function fetchData(endpoint: string): Promise<Data> {
     const response = await fetch(endpoint);
     if (!response.ok) {
