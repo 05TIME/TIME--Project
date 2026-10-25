@@ -54,3 +54,14 @@ Contributions are welcome! Please submit a pull request or open an issue for any
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
+## Local database (Docker Compose)
+
+The TimescaleDB service in `compose.yml` reads its credentials from environment variables. No password is committed.
+
+```bash
+cd time-engine
+cp .env.example .env   # then set a strong POSTGRES_PASSWORD (and matching DATABASE_URL)
+docker compose up -d db
+```
+
+`docker compose` will refuse to start if `POSTGRES_PASSWORD` is unset. `.env` is gitignored.

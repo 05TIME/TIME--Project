@@ -1,0 +1,15 @@
+services:
+  db:
+    image: timescale/timescaledb-ha:pg16-latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env (see .env.example)}
+      POSTGRES_DB: ${POSTGRES_DB:-edo_time_db}
+      POSTGRES_USER: ${POSTGRES_USER:-edo_user}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
