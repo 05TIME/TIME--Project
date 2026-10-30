@@ -10,6 +10,11 @@ const config = [
     rules: { "@typescript-eslint/no-require-imports": "off" },
   },
   {
+    // Tests poke at loosely-typed JSON-RPC payloads; allow `any` there as a warning.
+    files: ["**/*.test.ts", "test/**/*.ts"],
+    rules: { "@typescript-eslint/no-explicit-any": "warn" },
+  },
+  {
     ignores: [".next/**", "node_modules/**", "**/dist/**", "next-env.d.ts", "coverage/**", "*.zip"],
   },
 ];
