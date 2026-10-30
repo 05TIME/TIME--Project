@@ -74,3 +74,26 @@ describe("adapters", () => {
     expect(r.mode).toBe("whatIf");
   });
 });
+
+describe("replayTrace step integrity", () => {
+  it("fails when a recorded observation is edited but its stepHash is left alone", () => {
+    const t = runAgent(lekkiPricingAgent, LEKKI_EXAMPLE_INPUT);
+    expect(replayTrace(lekkiPricingAgent, t).ok).toBe(true);
+    const bad = structuredClone(t);
+    (bad.steps[2] as { observation: unknown }).observation = { forged: true };
+    const r = replayTrace(lekkiPricingAgent, bad);
+    expect(r.ok).toBe(false);
+    expect(r.firstMismatchStep).toBe(2);
+  });
+  it("fails when a recorded action is edited but its stepHash is left alone", () => {
+    const bad = structuredClone(runAgent(lekkiPricingAgent, LEKKI_EXAMPLE_INPUT));
+    bad.steps[1].action = { type: "forged", payload: null };
+    const r = replayTrace(lekkiPricingAgent, bad);
+    expect(r).toMatchObject({ ok: false, firstMismatchStep: 1 });
+  });
+  it("fails when finalState is edited with the traceHash left alone", () => {
+    const bad = structuredClone(runAgent(lekkiPricingAgent, LEKKI_EXAMPLE_INPUT));
+    bad.finalState = { forged: true };
+    expect(replayTrace(lekkiPricingAgent, bad).ok).toBe(false);
+  });
+});

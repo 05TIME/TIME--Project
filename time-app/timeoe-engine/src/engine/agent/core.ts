@@ -50,9 +50,16 @@ export function replayTrace<S extends Json, O extends Json>(agent: AgentDefiniti
   let firstMismatchStep: number | null = null;
   const n = Math.max(replayed.steps.length, trace.steps.length);
   for (let i = 0; i < n; i++) {
-    if (replayed.steps[i]?.stepHash !== trace.steps[i]?.stepHash) { firstMismatchStep = i; break; }
+    const rec = trace.steps[i];
+    // Integrity: the recorded step's own contents must still hash to its stored stepHash
+    // (catches an edited observation/action/etc. with the old hash left in place).
+    const intact = !!rec && (() => { const { stepHash, ...body } = rec; return hashOf(body) === stepHash; })();
+    if (!intact || replayed.steps[i]?.stepHash !== rec.stepHash) { firstMismatchStep = i; break; }
   }
-  return { ok: replayed.traceHash === trace.traceHash && firstMismatchStep === null, traceHash: replayed.traceHash, expectedHash: trace.traceHash, firstMismatchStep, replayed };
+  // The recorded trace body must also hash to its stored traceHash.
+  const { traceHash: _stored, ...recordedBody } = trace;
+  const bodyIntact = hashOf(recordedBody) === trace.traceHash;
+  return { ok: bodyIntact && replayed.traceHash === trace.traceHash && firstMismatchStep === null, traceHash: replayed.traceHash, expectedHash: trace.traceHash, firstMismatchStep, replayed };
 }
 
 /** Counterfactual: patch one observation (shallow merge), rerun with same seed+clock, diff the decisions. */
