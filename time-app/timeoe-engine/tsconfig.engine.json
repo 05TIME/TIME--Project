@@ -15,6 +15,7 @@
     "src/engine/**/*",
     "src/rules/**/*",
     "src/traces/**/*",
+    "src/mcp/**/*",
     "src/types/**/*",
     "test/**/*"
   ]
