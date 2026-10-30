@@ -6,12 +6,15 @@
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": [],
+    "types": [
+      "node"
+    ],
     "resolveJsonModule": true
   },
   "include": [
     "src/engine/**/*",
     "src/rules/**/*",
+    "src/traces/**/*",
     "src/types/**/*",
     "test/**/*"
   ]
