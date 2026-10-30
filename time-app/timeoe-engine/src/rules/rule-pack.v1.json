@@ -1,0 +1,33 @@
+{
+  "name": "timeoe-starter",
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "promo.only-active-codes",
+      "type": "activePromoCodes",
+      "description": "Only promo code 0147TIME is active; any other code in a post or send fires.",
+      "kinds": ["post", "send"],
+      "activeCodes": ["0147TIME"],
+      "codePattern": "\\b[0-9]{2,}[A-Z]{2,}[A-Z0-9]*\\b|\\b[A-Z]{2,}[0-9]{2,}[A-Z0-9]*\\b"
+    },
+    {
+      "id": "store.no-price-edits",
+      "type": "forbidEditTarget",
+      "description": "Never edit store prices.",
+      "targets": ["price"]
+    },
+    {
+      "id": "spend.cap",
+      "type": "spendCap",
+      "description": "Any spend above the cap fires.",
+      "maxAmount": 50,
+      "currency": "USD"
+    },
+    {
+      "id": "send.requires-approval",
+      "type": "requireApproval",
+      "description": "Any send needs details.approved === true.",
+      "kinds": ["send"]
+    }
+  ]
+}
