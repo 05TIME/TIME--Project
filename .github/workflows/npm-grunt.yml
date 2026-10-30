@@ -31,4 +31,4 @@ jobs:
         npm -v
 
     - name: Run Grunt Build
-      run: grunt
+      run: npx grunt
