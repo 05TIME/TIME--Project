@@ -1,4 +1,5 @@
 import { generateText } from "ai";
+import { AI_NOT_CONFIGURED, gatewayLooksUnconfigured, isGatewayUnavailableError } from "@/lib/ai-gateway";
 
 // $TIMEOE Causal Temporal Layer - Core Engine
 const TIMEOE_TEMPORAL_SYSTEM = `You are the $TIMEOE Temporal Intelligence Engine powered by xAI Grok.
@@ -49,9 +50,13 @@ Respond with valid JSON:
 }`;
 
 export async function POST(request: Request) {
-  try {
-    const { prompt, data, analysisType } = await request.json();
+  if (gatewayLooksUnconfigured()) return Response.json(AI_NOT_CONFIGURED, { status: 503 });
 
+  let body: { prompt?: unknown; data?: unknown; analysisType?: unknown };
+  try { body = await request.json(); } catch { return Response.json({ error: "Body must be JSON" }, { status: 400 }); }
+  const { prompt, data, analysisType } = body;
+
+  try {
     const result = await generateText({
       model: "xai/grok-3-mini",
       system: TIMEOE_TEMPORAL_SYSTEM,
@@ -75,14 +80,19 @@ Apply rigorous causal inference methods. Identify true causal relationships vs s
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
+    if (isGatewayUnavailableError(error)) {
+      console.error("TIMEOE temporal: AI gateway unavailable");
+      return Response.json(AI_NOT_CONFIGURED, { status: 503 });
+    }
     console.error("TIMEOE temporal analysis error:", error);
+    // Generic message only; internal error details stay in the server log.
     return Response.json(
       {
         causalityScore: 0,
         isCausal: false,
         counterfactualDelta: 0,
         summary: "Unable to complete analysis. Please try again.",
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: "Analysis failed",
         engine: "$TIMEOE + Grok",
         fallback: true,
       },
