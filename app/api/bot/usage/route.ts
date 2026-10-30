@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     }
 
     const today = new Date().toISOString().split("T")[0];
-    let usage = userUsage.get(userId) || {
+    const usage = userUsage.get(userId) || {
       queries: 0,
       tier: "free" as const,
       lastReset: today,
