@@ -31,25 +31,16 @@ timeoe-engine
 └── README.md
 ```
 
-## Installation
+## Installation and usage
 
-To get started with the $TIMEŒ Engine, clone the repository and install the dependencies:
-
-```bash
-git clone <repository-url>
-cd timeoe-engine
-npm install
-```
-
-## Usage
-
-After installation, you can run the application using:
+The engine has no package.json of its own. Its dependencies (zod, @supabase/supabase-js, etc.) come from the repo root, so run everything from the root:
 
 ```bash
-npm start
+npm install                 # at the repo root
+npx vitest run              # tests (root vitest.config.ts includes time-app/timeoe-engine/test)
+npm run typecheck:engine    # engine typecheck
+npx grunt                   # CI: tests + engine typecheck + engine build (tsc -p time-app/timeoe-engine/tsconfig.json)
 ```
-
-This will start the development server and open the application in your default web browser.
 
 ## Contributing
 
