@@ -6,7 +6,13 @@
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": []
+    "types": [],
+    "resolveJsonModule": true
   },
-  "include": ["src/engine/**/*", "src/types/**/*", "test/**/*"]
+  "include": [
+    "src/engine/**/*",
+    "src/rules/**/*",
+    "src/types/**/*",
+    "test/**/*"
+  ]
 }

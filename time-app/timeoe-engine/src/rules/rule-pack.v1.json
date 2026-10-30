@@ -1,0 +1,49 @@
+{
+  "name": "timeoe-starter",
+  "version": "1.1.0",
+  "rules": [
+    {
+      "id": "promo.only-active-codes",
+      "type": "activePromoCodes",
+      "description": "Only promo code 0147TIME is active; any other code in a post or send fires (letter+digit tokens anywhere; all-caps 4+ letter tokens and the token after code/promo/coupon/discount/voucher when such a word is present).",
+      "kinds": [
+        "post",
+        "send"
+      ],
+      "activeCodes": [
+        "0147TIME"
+      ],
+      "codePattern": "\\b[0-9]{2,}[A-Z]{2,}[A-Z0-9]*\\b|\\b[A-Z]{2,}[0-9]{2,}[A-Z0-9]*\\b",
+      "triggerWords": [
+        "code",
+        "promo",
+        "coupon",
+        "discount",
+        "voucher"
+      ]
+    },
+    {
+      "id": "store.no-price-edits",
+      "type": "forbidEditTarget",
+      "description": "Never edit store prices.",
+      "targets": [
+        "price"
+      ]
+    },
+    {
+      "id": "spend.cap",
+      "type": "spendCap",
+      "description": "Any spend above the cap, in another currency, or without a numeric amount fires.",
+      "maxAmount": 50000,
+      "currency": "NGN"
+    },
+    {
+      "id": "send.requires-approval",
+      "type": "requireApproval",
+      "description": "Any send needs details.approved === true.",
+      "kinds": [
+        "send"
+      ]
+    }
+  ]
+}
