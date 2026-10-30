@@ -1,6 +1,8 @@
 import { generateText } from "ai";
+import { AI_NOT_CONFIGURED, gatewayLooksUnconfigured, isGatewayUnavailableError } from "@/lib/ai-gateway";
 
 export async function POST(request: Request) {
+  if (gatewayLooksUnconfigured()) return Response.json(AI_NOT_CONFIGURED, { status: 503 });
   try {
     const { cause, effect, timestamps } = await request.json();
 
@@ -28,6 +30,10 @@ Determine the causal relationship, strength, and potential mechanisms.`,
     const analysis = JSON.parse(result.text);
     return Response.json(analysis);
   } catch (error) {
+    if (isGatewayUnavailableError(error)) {
+      console.error("AI gateway unavailable");
+      return Response.json(AI_NOT_CONFIGURED, { status: 503 });
+    }
     console.error("Causality analysis error:", error);
     return Response.json(
       { error: "Failed to analyze causality" },

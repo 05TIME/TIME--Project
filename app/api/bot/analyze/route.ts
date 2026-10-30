@@ -1,5 +1,6 @@
 import { generateText } from "ai";
 import { NextResponse } from "next/server";
+import { AI_NOT_CONFIGURED, gatewayLooksUnconfigured, isGatewayUnavailableError } from "@/lib/ai-gateway";
 
 // $TIMEOE Bot API - Causal Analysis Endpoint
 const TIMEOE_BOT_SYSTEM = `You are @TIMEOai_Bot, the Telegram interface for the $TIMEOE Causal Temporal Engine.
@@ -38,6 +39,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    if (gatewayLooksUnconfigured()) return Response.json(AI_NOT_CONFIGURED, { status: 503 });
+
     const maxOutputTokens = mode === "detailed" ? 1000 : 300;
 
     const result = await generateText({
@@ -61,6 +64,10 @@ export async function POST(request: Request) {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
+    if (isGatewayUnavailableError(error)) {
+      console.error("AI gateway unavailable");
+      return Response.json(AI_NOT_CONFIGURED, { status: 503 });
+    }
     console.error("[TIMEOai_Bot] Analysis error:", error);
     return NextResponse.json(
       { 
