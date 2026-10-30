@@ -1,4 +1,5 @@
 import { generateText } from "ai";
+import { AI_NOT_CONFIGURED, gatewayLooksUnconfigured, isGatewayUnavailableError } from "@/lib/ai-gateway";
 
 // $TIMEOE Causal Temporal Layer - Grok Integration
 const TIMEOE_CAUSAL_SYSTEM = `You are the $TIMEOE Causal Temporal Engine integrated with xAI Grok.
@@ -57,6 +58,7 @@ Respond with valid JSON:
 }`;
 
 export async function POST(request: Request) {
+  if (gatewayLooksUnconfigured()) return Response.json(AI_NOT_CONFIGURED, { status: 503 });
   try {
     const { scenario, baselineData, intervention, timeRange } = await request.json();
 
@@ -86,6 +88,10 @@ Apply the TIMEOE causal framework to simulate this counterfactual. What would ha
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
+    if (isGatewayUnavailableError(error)) {
+      console.error("AI gateway unavailable");
+      return Response.json(AI_NOT_CONFIGURED, { status: 503 });
+    }
     console.error("TIMEOE counterfactual simulation error:", error);
     return Response.json(
       { 
