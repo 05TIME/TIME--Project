@@ -14,7 +14,7 @@ export type ProposedAction = z.infer<typeof ProposedActionSchema>;
 const base = { id: z.string().min(1), description: z.string().min(1) };
 
 export const RuleSchema = z.discriminatedUnion("type", [
-  z.object({ ...base, type: z.literal("activePromoCodes"), kinds: z.array(ActionKindSchema).min(1), activeCodes: z.array(z.string().min(1)).min(1), codePattern: z.string().min(1) }),
+  z.object({ ...base, type: z.literal("activePromoCodes"), kinds: z.array(ActionKindSchema).min(1), activeCodes: z.array(z.string().min(1)).min(1), codePattern: z.string().min(1), triggerWords: z.array(z.string().min(1)).default([]) }),
   z.object({ ...base, type: z.literal("forbidEditTarget"), targets: z.array(z.string().min(1)).min(1) }),
   z.object({ ...base, type: z.literal("spendCap"), maxAmount: z.number().nonnegative(), currency: z.string().min(1) }),
   z.object({ ...base, type: z.literal("requireApproval"), kinds: z.array(ActionKindSchema).min(1) }),

@@ -4,9 +4,9 @@ import { checkAction, checkActionTool, rulePackHash, starterRulePack, RulePackSc
 const pass = (a: object, mode?: "warn" | "block") => checkAction(a, starterRulePack, { mode });
 
 describe("checkAction rule pack", () => {
-  it("golden rulePackHash for starter pack v1.0.0", () => {
-    expect(starterRulePack.version).toBe("1.0.0");
-    expect(rulePackHash(starterRulePack)).toBe("1a707553d11d635c622071a41dda7211a7703081ed9f5fff5165f135bb18f68c");
+  it("golden rulePackHash for starter pack v1.1.0", () => {
+    expect(starterRulePack.version).toBe("1.1.0");
+    expect(rulePackHash(starterRulePack)).toBe("b6f6055e4700429c33b171a7379e2a5e1713799b4dbfd266a6b153da1ccd4fa5");
   });
 
   it("hash is independent of key order", () => {
@@ -16,7 +16,7 @@ describe("checkAction rule pack", () => {
 
   it("passes a post with the active code", () => {
     const r = pass({ bot: "sales", kind: "post", target: "x", details: { text: "Use 0147TIME today" } });
-    expect(r).toMatchObject({ verdict: "pass", firedRules: [], rulePackVersion: "1.0.0" });
+    expect(r).toMatchObject({ verdict: "pass", firedRules: [], rulePackVersion: "1.1.0" });
   });
 
   it("fires on any other promo code (warn by default, block in block mode)", () => {
@@ -36,10 +36,10 @@ describe("checkAction rule pack", () => {
   });
 
   it("spend cap is configurable", () => {
-    expect(pass({ bot: "b", kind: "spend", target: "ads", details: { amount: 50 } }).verdict).toBe("pass");
-    expect(pass({ bot: "b", kind: "spend", target: "ads", details: { amount: 51 } }, "block").firedRules[0].id).toBe("spend.cap");
-    const pack = { ...starterRulePack, rules: starterRulePack.rules.map((r) => (r.type === "spendCap" ? { ...r, maxAmount: 100 } : r)) };
-    expect(checkAction({ bot: "b", kind: "spend", target: "ads", details: { amount: 51 } }, pack).verdict).toBe("pass");
+    expect(pass({ bot: "b", kind: "spend", target: "ads", details: { amount: 50000, currency: "NGN" } }).verdict).toBe("pass");
+    expect(pass({ bot: "b", kind: "spend", target: "ads", details: { amount: 51000, currency: "NGN" } }, "block").firedRules[0].id).toBe("spend.cap");
+    const pack = { ...starterRulePack, rules: starterRulePack.rules.map((r) => (r.type === "spendCap" ? { ...r, maxAmount: 100000 } : r)) };
+    expect(checkAction({ bot: "b", kind: "spend", target: "ads", details: { amount: 51000, currency: "NGN" } }, pack).verdict).toBe("pass");
     expect(rulePackHash(pack)).not.toBe(rulePackHash(starterRulePack));
   });
 
@@ -48,6 +48,20 @@ describe("checkAction rule pack", () => {
     expect(r.verdict).toBe("block");
     expect(r.firedRules.map((f) => f.id)).toEqual(["promo.only-active-codes", "send.requires-approval"]);
     expect(pass({ bot: "b", kind: "send", target: "email", details: { approved: true, body: "hi" } }).verdict).toBe("pass");
+  });
+
+  it("catches all-letter codes near code words but not ordinary caps", () => {
+    const fire = (text: string) => pass({ bot: "s", kind: "post", target: "x", details: { text } }).firedRules.map((f) => f.reason);
+    expect(fire("Promo: WELCOME gets 10% off")[0]).toContain("WELCOME");
+    expect(fire("use code SUMMER")[0]).toContain("SUMMER");
+    expect(fire("use code summer")[0]).toContain("SUMMER");
+    expect(fire("BIG NEWS TODAY: OUR STORE IS OPEN")).toEqual([]);
+    expect(fire("Use promo code 0147TIME")).toEqual([]);
+  });
+
+  it("spend in another currency or without amount fires", () => {
+    expect(pass({ bot: "b", kind: "spend", target: "ads", details: { amount: 10, currency: "USD" } }).firedRules[0].reason).toContain("cannot compare");
+    expect(pass({ bot: "b", kind: "spend", target: "ads", details: { currency: "NGN" } }).firedRules[0].id).toBe("spend.cap");
   });
 
   it("is deterministic and rejects invalid actions", () => {

@@ -22,10 +22,23 @@ function evalRule(rule: Rule, a: ProposedAction): string | null {
   switch (rule.type) {
     case "activePromoCodes": {
       if (!rule.kinds.includes(a.kind)) return null;
-      const re = new RegExp(rule.codePattern, "g");
+      const re = new RegExp(`^(?:${rule.codePattern})$`);
       const active = new Set(rule.activeCodes.map((c) => c.toUpperCase()));
+      const triggers = new Set(rule.triggerWords.map((w) => w.toLowerCase()));
       const found = new Set<string>();
-      for (const s of strings(a.details)) for (const m of s.toUpperCase().match(re) ?? []) if (!active.has(m)) found.add(m);
+      for (const s of strings(a.details)) {
+        const tokens = s.match(/[A-Za-z0-9]+/g) ?? [];
+        const triggered = tokens.some((t) => triggers.has(t.toLowerCase()));
+        tokens.forEach((t, i) => {
+          const up = t.toUpperCase();
+          if (triggers.has(t.toLowerCase())) return;
+          const afterTrigger = i > 0 && triggers.has(tokens[i - 1].toLowerCase());
+          const isCode = re.test(up) && t === up
+            || (triggered && /^[A-Z]{4,}$/.test(t))
+            || afterTrigger;
+          if (isCode && !active.has(up)) found.add(up);
+        });
+      }
       const codes = [...found].sort();
       return codes.length ? `inactive promo code(s): ${codes.join(", ")} (active: ${rule.activeCodes.join(", ")})` : null;
     }
@@ -38,7 +51,9 @@ function evalRule(rule: Rule, a: ProposedAction): string | null {
     case "spendCap": {
       if (a.kind !== "spend") return null;
       const amt = a.details.amount;
-      if (typeof amt !== "number" || !Number.isFinite(amt)) return `spend has no numeric details.amount`;
+      if (typeof amt !== "number" || !Number.isFinite(amt)) return `spend has no numeric details.amount; cannot compare to cap`;
+      const cur = typeof a.details.currency === "string" ? a.details.currency.toUpperCase() : undefined;
+      if (cur !== rule.currency.toUpperCase()) return `spend currency ${cur ?? "(missing)"} is not ${rule.currency}; cannot compare to cap`;
       return amt > rule.maxAmount ? `spend ${amt} exceeds cap ${rule.maxAmount} ${rule.currency}` : null;
     }
     case "requireApproval":
